@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Title</title>
+    <title>Reset password</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,8 +14,8 @@
       <div class="container">
         <div class="row">
             <div class="col-md-4 offset-md-4" style="margin-top: 45px">
-                <h4>User Login</h4>
-                <form action="{{route('user.check')}}" method="POST" autocomplete="off">
+                <h4>Reset Password</h4>
+                <form action="{{route('user.reset.password')}}" method="POST" autocomplete="off">
                   @csrf
                   @if (Session('success'))
                     <div class="alert alert-success">
@@ -26,18 +26,12 @@
                     <div class="alert alert-success">
                       {{ Session('fail') }}
                     </div>
-                  @endif
-
-                  @if (Session('info'))
-                    <div class="alert alert-info">
-                      {{ Session('info') }}
-                    </div>
-                  @endif
-
+                  @endif                    
+                  <input type="hidden" name="token" value="{{$token}}">                  
                     <div class="form-group">
                         <label for="email">Email address</label>
                         <input type="email" name="email" class="form-control" id="email" 
-                        value="{{Session::get('verifiedEmail')?Session::get('verifiedEmail'):old('eamil')}}" aria-describedby="emailHelp">
+                        value="{{$email ?? old('email')}}" aria-describedby="emailHelp">
                         <br>
                         @error('email')
                             <span class="text-danger">{{$message}}</span>                          
@@ -52,10 +46,16 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="bn btn-primary">Login</button>
-                        <a href="{{route('user.register')}}">Create New Account</a>
+                        <label for="cpassword">confirm password </label>
+                        <input type="password" name="password_confirmation" class="form-control" id="cpassword" value="{{old('cpassword')}}" >
                         <br>
-                        <a href="{{route('user.forgot.password.form')}}">Forgot Password</a>
+                        @error('cpassword')
+                            <span class="text-danger">{{$message}}</span>                          
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="bn btn-primary">Reset Password</button>
+                        <a href="{{route('user.login')}}">login</a>                   
                     </div>
                 </form>
             </div>

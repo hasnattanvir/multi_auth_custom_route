@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Title</title>
+    <title>Forgot Password</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,8 +14,8 @@
       <div class="container">
         <div class="row">
             <div class="col-md-4 offset-md-4" style="margin-top: 45px">
-                <h4>User Login</h4>
-                <form action="{{route('user.check')}}" method="POST" autocomplete="off">
+                <h4>Forgot Password</h4>
+                <form action="{{route('user.forgot.password.link')}}" method="POST" autocomplete="off">
                   @csrf
                   @if (Session('success'))
                     <div class="alert alert-success">
@@ -26,36 +26,22 @@
                     <div class="alert alert-success">
                       {{ Session('fail') }}
                     </div>
-                  @endif
-
-                  @if (Session('info'))
-                    <div class="alert alert-info">
-                      {{ Session('info') }}
-                    </div>
-                  @endif
+                  @endif                 
 
                     <div class="form-group">
-                        <label for="email">Email address</label>
+                        <label for="email">Enter your email address and we will send you a link to reset your password</label>
                         <input type="email" name="email" class="form-control" id="email" 
-                        value="{{Session::get('verifiedEmail')?Session::get('verifiedEmail'):old('eamil')}}" aria-describedby="emailHelp">
+                        value="{{old('email')}}" aria-describedby="emailHelp">
                         <br>
                         @error('email')
                             <span class="text-danger">{{$message}}</span>                          
                         @enderror
                     </div>
+                    
                     <div class="form-group">
-                        <label for="password">password </label>
-                        <input type="password" name="password" class="form-control" id="password" value="{{old('password')}}" aria-describedby="passwordHelp">
-                        <br>
-                        @error('password')
-                            <span class="text-danger">{{$message}}</span>                          
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="bn btn-primary">Login</button>
-                        <a href="{{route('user.register')}}">Create New Account</a>
-                        <br>
-                        <a href="{{route('user.forgot.password.form')}}">Forgot Password</a>
+                        <button type="submit" class="bn btn-primary">Send Reset Password Link</button>
+                        
+                        <a href="{{route('user.login')}}">Login</a>
                     </div>
                 </form>
             </div>
